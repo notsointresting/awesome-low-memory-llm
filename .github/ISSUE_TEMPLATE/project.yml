@@ -1,0 +1,24 @@
+name: Suggest a project
+description: Propose an open-source resource for inclusion
+title: "[Project] "
+labels: ["project-suggestion"]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Official GitHub URL
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: How does it help memory-efficient LLM inference?
+      description: Describe the technical mechanism, evidence, and limitations.
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Supported hardware and source links
+      description: Do not guess memory minimums or benchmark results.

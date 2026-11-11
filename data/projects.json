@@ -1,0 +1,194 @@
+[
+  {
+    "name": "Edge0",
+    "url": "https://github.com/Edge0-AI/Edge0",
+    "category": "offloading",
+    "hardware": [
+      "desktop",
+      "mobile"
+    ],
+    "note": "SSD-backed sparse MoE weight streaming; follow source for supported platforms",
+    "evidence": "project-reported"
+  },
+  {
+    "name": "FlexGen",
+    "url": "https://github.com/FMInference/FlexGen",
+    "category": "offloading",
+    "hardware": [
+      "cpu",
+      "gpu",
+      "ssd"
+    ],
+    "note": "Research system for offloaded inference",
+    "evidence": "documentation"
+  },
+  {
+    "name": "PowerInfer",
+    "url": "https://github.com/SJTU-IPADS/PowerInfer",
+    "category": "sparsity",
+    "hardware": [
+      "cpu",
+      "gpu"
+    ],
+    "note": "Activation-aware hybrid inference",
+    "evidence": "documentation"
+  },
+  {
+    "name": "llama.cpp",
+    "url": "https://github.com/ggml-org/llama.cpp",
+    "category": "runtime",
+    "hardware": [
+      "cpu",
+      "gpu",
+      "mobile"
+    ],
+    "note": "Quantized GGUF inference and hybrid offloading",
+    "evidence": "documentation"
+  },
+  {
+    "name": "Ollama",
+    "url": "https://github.com/ollama/ollama",
+    "category": "runtime",
+    "hardware": [
+      "cpu",
+      "gpu"
+    ],
+    "note": "Local model runner and service",
+    "evidence": "documentation"
+  },
+  {
+    "name": "MLX LM",
+    "url": "https://github.com/ml-explore/mlx-lm",
+    "category": "runtime",
+    "hardware": [
+      "apple-silicon"
+    ],
+    "note": "Inference and fine-tuning for MLX",
+    "evidence": "documentation"
+  },
+  {
+    "name": "KoboldCpp",
+    "url": "https://github.com/LostRuins/koboldcpp",
+    "category": "runtime",
+    "hardware": [
+      "cpu",
+      "gpu"
+    ],
+    "note": "Local GGUF runner",
+    "evidence": "documentation"
+  },
+  {
+    "name": "MLC LLM",
+    "url": "https://github.com/mlc-ai/mlc-llm",
+    "category": "runtime",
+    "hardware": [
+      "mobile",
+      "gpu"
+    ],
+    "note": "Multi-device LLM deployment",
+    "evidence": "documentation"
+  },
+  {
+    "name": "Mistral.rs",
+    "url": "https://github.com/EricLBuehler/mistral.rs",
+    "category": "runtime",
+    "hardware": [
+      "cpu",
+      "gpu",
+      "apple-silicon"
+    ],
+    "note": "Rust inference runtime",
+    "evidence": "documentation"
+  },
+  {
+    "name": "vLLM",
+    "url": "https://github.com/vllm-project/vllm",
+    "category": "serving",
+    "hardware": [
+      "gpu"
+    ],
+    "note": "High-throughput serving; not necessarily low-RAM",
+    "evidence": "documentation"
+  },
+  {
+    "name": "SGLang",
+    "url": "https://github.com/sgl-project/sglang",
+    "category": "serving",
+    "hardware": [
+      "gpu"
+    ],
+    "note": "Advanced model serving",
+    "evidence": "documentation"
+  },
+  {
+    "name": "ExLlamaV2",
+    "url": "https://github.com/turboderp/exllamav2",
+    "category": "quantization",
+    "hardware": [
+      "gpu"
+    ],
+    "note": "Quantized GPU LLM inference",
+    "evidence": "documentation"
+  },
+  {
+    "name": "bitsandbytes",
+    "url": "https://github.com/bitsandbytes-foundation/bitsandbytes",
+    "category": "quantization",
+    "hardware": [
+      "cpu",
+      "gpu"
+    ],
+    "note": "Low-bit quantization building blocks",
+    "evidence": "documentation"
+  },
+  {
+    "name": "AutoGPTQ",
+    "url": "https://github.com/AutoGPTQ/AutoGPTQ",
+    "category": "quantization",
+    "hardware": [
+      "gpu"
+    ],
+    "note": "GPTQ quantization implementation; check maintenance",
+    "evidence": "documentation"
+  },
+  {
+    "name": "GPTQModel",
+    "url": "https://github.com/ModelCloud/GPTQModel",
+    "category": "quantization",
+    "hardware": [
+      "gpu"
+    ],
+    "note": "GPTQ model tooling",
+    "evidence": "documentation"
+  },
+  {
+    "name": "AWQ",
+    "url": "https://github.com/mit-han-lab/llm-awq",
+    "category": "quantization",
+    "hardware": [
+      "gpu"
+    ],
+    "note": "Activation-aware weight quantization",
+    "evidence": "documentation"
+  },
+  {
+    "name": "HQQ",
+    "url": "https://github.com/mobiusml/hqq",
+    "category": "quantization",
+    "hardware": [
+      "gpu"
+    ],
+    "note": "Half-quadratic quantization",
+    "evidence": "documentation"
+  },
+  {
+    "name": "AQLM",
+    "url": "https://github.com/Vahe1994/AQLM",
+    "category": "quantization",
+    "hardware": [
+      "gpu"
+    ],
+    "note": "Additive quantization implementation",
+    "evidence": "documentation"
+  }
+]
