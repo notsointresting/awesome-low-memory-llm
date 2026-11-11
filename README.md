@@ -89,6 +89,20 @@ These are **starting points, not guarantees of compatibility** with a specific m
 | --- | --- |
 | [llmfit](https://github.com/AlexsJones/llmfit) | Detect CPU, RAM, GPU and VRAM to estimate what models fit and collect community benchmarks; not an inference engine |
 
+### New: embedded devices, consumer PCs and hardware guidance (Nov 2026)
+
+| Project | Practical reason to explore it |
+| --- | --- |
+| [Strata](https://github.com/Niko1221/Strata) | SSD-assisted inference and localhost APIs on consumer PCs |
+| [FreeToken](https://github.com/flashml-org/freetoken) | Adaptive MoE cache management across accelerator and host resources |
+| [PicoLM](https://github.com/RightNow-AI/picolm) | C runtime with author-reported ~45 MB runtime memory for embedded testing |
+| [oMLX](https://github.com/jundot/omlx) | Apple Silicon server with tiered SSD/KV caching |
+| [BigMoeOnEdge](https://github.com/Helldez/BigMoeOnEdge) | Current upstream for mobile/desktop bounded-memory MoE expert streaming |
+| [Low-Spec Coding LLM Setup](https://github.com/Yasvanth-S/local-coding-llm-low-spec-setup) | A measured llama.cpp/aider coding setup on a GTX 1650 4 GB VRAM laptop |
+
+> [!NOTE]
+> These are **author-published** results. They are not our own independent benchmark runs. `edgeMoE` references a different repository in its README; see [BigMoeOnEdge](https://github.com/Helldez/BigMoeOnEdge) for the more active upstream.
+
 ## 🧩 Techniques
 
 | Method | Idea | Trade-off |

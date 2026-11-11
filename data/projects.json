@@ -8,8 +8,37 @@
       "ssd",
       "apple-silicon"
     ],
-    "note": "Streams model layers or selected experts, reducing device VRAM demand; host RAM and large disk still required.",
-    "evidence": "project-reported"
+    "note": "Streams one layer or selected MoE experts through device VRAM to run much larger checkpoints.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "Layer or expert streaming",
+      "platforms": [
+        "nvidia",
+        "apple",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Streams one layer or selected MoE experts through device VRAM to run much larger checkpoints.",
+      "limits": "Tiny VRAM footprint is NOT total host RAM; substantial storage, conversion time and slow tokens/sec for extreme models. Apple support is architecture-limited.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/lyogavin/airllm",
+      "reports": [
+        {
+          "model": "Kimi K3 (2.8T)",
+          "hardware": "RTX 6000 Ada",
+          "system_ram_gb": null,
+          "peak_ram_gb": null,
+          "peak_ram_metric": null,
+          "peak_vram_gb": 3.72,
+          "tokens_per_second": null,
+          "disk_gb": null,
+          "source": "https://github.com/lyogavin/airllm",
+          "detail": "Author-reported GPU VRAM only; complete host RAM/storage requirements not implied.",
+          "evidence": "author-reported"
+        }
+      ]
+    }
   },
   {
     "name": "AQLM",
@@ -19,7 +48,18 @@
       "gpu"
     ],
     "note": "Additive quantization implementation",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "quantization",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Additive quantization implementation",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/Vahe1994/AQLM",
+      "reports": []
+    }
   },
   {
     "name": "AutoGPTQ",
@@ -29,7 +69,18 @@
       "gpu"
     ],
     "note": "GPTQ quantization implementation; check maintenance",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "quantization",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "GPTQ quantization implementation; check maintenance",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/AutoGPTQ/AutoGPTQ",
+      "reports": []
+    }
   },
   {
     "name": "AWQ",
@@ -39,7 +90,74 @@
       "gpu"
     ],
     "note": "Activation-aware weight quantization",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "quantization",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Activation-aware weight quantization",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/mit-han-lab/llm-awq",
+      "reports": []
+    }
+  },
+  {
+    "name": "BigMoeOnEdge",
+    "url": "https://github.com/Helldez/BigMoeOnEdge",
+    "category": "offloading",
+    "hardware": [
+      "mobile",
+      "cpu",
+      "ssd",
+      "gpu"
+    ],
+    "note": "Cross-platform MoE expert streaming via llama.cpp, including a mobile CPU path and desktop GPU caching.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "Bounded flash expert streaming",
+      "platforms": [
+        "android",
+        "apple",
+        "windows",
+        "linux",
+        "cpu",
+        "nvidia"
+      ],
+      "min_ram_gb": null,
+      "summary": "Cross-platform MoE expert streaming via llama.cpp, including a mobile CPU path and desktop GPU caching.",
+      "limits": "Very large models still require full quantized weights on flash; Android results near 1 tok/s on the documented 284B test.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/Helldez/BigMoeOnEdge",
+      "reports": [
+        {
+          "model": "DeepSeek V4 Flash (284B)",
+          "hardware": "Android phone CPU/flash",
+          "system_ram_gb": 12,
+          "peak_ram_gb": null,
+          "peak_ram_metric": null,
+          "tokens_per_second": 1,
+          "disk_gb": 91,
+          "source": "https://github.com/Helldez/BigMoeOnEdge",
+          "detail": "Author-reported; 91 GB is quantized weights on storage and speed approximately 1 tok/s.",
+          "evidence": "author-reported"
+        },
+        {
+          "model": "Qwen3.6-35B-A3B",
+          "hardware": "Windows laptop CPU/flash",
+          "system_ram_gb": 16,
+          "peak_ram_gb": null,
+          "peak_ram_metric": null,
+          "tokens_per_second": 5,
+          "disk_gb": 21,
+          "source": "https://github.com/Helldez/BigMoeOnEdge",
+          "detail": "Author-reported; performance depends on flash throughput.",
+          "evidence": "author-reported"
+        }
+      ]
+    }
   },
   {
     "name": "bitsandbytes",
@@ -50,7 +168,18 @@
       "gpu"
     ],
     "note": "Low-bit quantization building blocks",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "quantization",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Low-bit quantization building blocks",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/bitsandbytes-foundation/bitsandbytes",
+      "reports": []
+    }
   },
   {
     "name": "Colibri",
@@ -61,8 +190,25 @@
       "gpu",
       "ssd"
     ],
-    "note": "Hierarchical GPU/RAM/NVMe expert placement for multiple MoE model families; CPU-only path supported.",
-    "evidence": "project-reported"
+    "note": "Pure-C inference for supported MoE families, with hot experts on GPU, warm in RAM, cold on NVMe.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "GPU / RAM / NVMe expert tiers",
+      "platforms": [
+        "cpu",
+        "nvidia",
+        "apple",
+        "windows",
+        "linux"
+      ],
+      "min_ram_gb": 8,
+      "summary": "Pure-C inference for supported MoE families, with hot experts on GPU, warm in RAM, cold on NVMe.",
+      "limits": "README states at least 8 GB RAM and 22 GB disk for the smallest supported model; large checkpoints require vastly more space.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/JustVugg/colibri",
+      "reports": []
+    }
   },
   {
     "name": "DwarfStar (ds4)",
@@ -73,8 +219,23 @@
       "gpu",
       "ssd"
     ],
-    "note": "Specialized inference for selected frontier MoE families with SSD streaming and multi-GPU support; beta.",
-    "evidence": "project-reported"
+    "note": "Highly specialized engine for selected DeepSeek/GLM/Qwen families with Metal, CUDA, ROCm and SSD streaming.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Model-specific SSD/multi-GPU engine",
+      "platforms": [
+        "apple",
+        "nvidia",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Highly specialized engine for selected DeepSeek/GLM/Qwen families with Metal, CUDA, ROCm and SSD streaming.",
+      "limits": "Beta; primary targets are high-memory Macs (64–96 GB+) and powerful consumer/workstation configurations. Not a generic GGUF engine.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/antirez/ds4",
+      "reports": []
+    }
   },
   {
     "name": "Edge0",
@@ -87,8 +248,48 @@
       "gpu",
       "ssd"
     ],
-    "note": "Unified GGML-based MoE engine streaming experts from SSD with trained pre-routing and Recover-LoRA; currently supports edge0-35b, with 8b planned.",
-    "evidence": "project-reported"
+    "note": "Predictive SSD expert streaming with Recover-LoRA and trained prerouter; matched Edge0 checkpoints required.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "Predictive MoE expert streaming",
+      "platforms": [
+        "apple",
+        "android",
+        "windows"
+      ],
+      "min_ram_gb": null,
+      "summary": "Predictive SSD expert streaming with Recover-LoRA and trained prerouter; matched Edge0 checkpoints required.",
+      "limits": "Current unified engine supports edge0-35b; 8b support planned. Mac phys_footprint and Android RSS are not directly comparable.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/Edge0-AI/Edge0",
+      "reports": [
+        {
+          "model": "Edge0-35B-A3B-preview (int4)",
+          "hardware": "Apple M5 / Metal",
+          "system_ram_gb": 16,
+          "peak_ram_gb": 3.43,
+          "peak_ram_metric": "phys_footprint (GiB)",
+          "tokens_per_second": 24.8,
+          "disk_gb": null,
+          "source": "https://github.com/Edge0-AI/Edge0/blob/main/edge0-infer/docs/benchmarking.md",
+          "detail": "Decode 24.8–24.9 tok/s; 3,084-token prompt; numbers from three author-run processes.",
+          "evidence": "author-reported"
+        },
+        {
+          "model": "Edge0-35B-A3B-preview (int4)",
+          "hardware": "OnePlus PKR110, Snapdragon 8 Elite / Android CPU",
+          "system_ram_gb": 16,
+          "peak_ram_gb": 2.82,
+          "peak_ram_metric": "RSS (GiB)",
+          "tokens_per_second": 11.4,
+          "disk_gb": null,
+          "source": "https://github.com/Edge0-AI/Edge0/blob/main/edge0-infer/docs/benchmarking.md",
+          "detail": "Decode 11.4–11.8 tok/s; 627-token prompt. Different memory metric from Mac.",
+          "evidence": "author-reported"
+        }
+      ]
+    }
   },
   {
     "name": "edgeMoE (BigMoeOnEdge)",
@@ -99,8 +300,22 @@
       "cpu",
       "ssd"
     ],
-    "note": "Android CPU-first bounded expert streaming via llama.cpp API; README points to another upstream identity; provenance needs review.",
-    "evidence": "project-reported"
+    "note": "Early repository featuring mobile CPU expert streaming; branding points to BigMoeOnEdge elsewhere.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Android CPU expert streaming (legacy)",
+      "platforms": [
+        "android",
+        "cpu"
+      ],
+      "min_ram_gb": null,
+      "summary": "Early repository featuring mobile CPU expert streaming; branding points to BigMoeOnEdge elsewhere.",
+      "limits": "Provenance not resolved; likely a prior/mirrored version. Use Helldez/BigMoeOnEdge for actively maintained canonical upstream.",
+      "level": "provenance-review",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/supastishn/edgeMoE",
+      "reports": []
+    }
   },
   {
     "name": "ExLlamaV2",
@@ -110,7 +325,18 @@
       "gpu"
     ],
     "note": "Quantized GPU LLM inference",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "quantization",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Quantized GPU LLM inference",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/turboderp/exllamav2",
+      "reports": []
+    }
   },
   {
     "name": "FlexGen",
@@ -122,7 +348,45 @@
       "ssd"
     ],
     "note": "Research system for offloaded inference",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "offloading",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Research system for offloaded inference",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/FMInference/FlexGen",
+      "reports": []
+    }
+  },
+  {
+    "name": "FreeToken",
+    "url": "https://github.com/flashml-org/freetoken",
+    "category": "offloading",
+    "hardware": [
+      "gpu",
+      "cpu"
+    ],
+    "note": "Orchestrates MoE experts across GPUs, CPU and host memory with dynamic cache budgeting.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Elastic tiered MoE caching",
+      "platforms": [
+        "nvidia",
+        "windows",
+        "linux",
+        "cpu"
+      ],
+      "min_ram_gb": null,
+      "summary": "Orchestrates MoE experts across GPUs, CPU and host memory with dynamic cache budgeting.",
+      "limits": "Project positions itself for frontier-scale serving; no universal minimum RAM or matched speed claim included here.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/flashml-org/freetoken",
+      "reports": []
+    }
   },
   {
     "name": "GPTQModel",
@@ -132,7 +396,18 @@
       "gpu"
     ],
     "note": "GPTQ model tooling",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "quantization",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "GPTQ model tooling",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/ModelCloud/GPTQModel",
+      "reports": []
+    }
   },
   {
     "name": "HotPin",
@@ -142,8 +417,36 @@
       "cpu",
       "ssd"
     ],
-    "note": "Routing-informed expert pinning and optional prefetch; publisher provides CPU/NVMe measurements.",
-    "evidence": "project-reported"
+    "note": "Pins hot experts in RAM and prefetches likely reads for CPU/NVMe inference under memory pressure.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "Routing-guided expert pinning",
+      "platforms": [
+        "cpu",
+        "windows",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Pins hot experts in RAM and prefetches likely reads for CPU/NVMe inference under memory pressure.",
+      "limits": "Can slow models already fitting RAM; upstream README includes a placeholder arXiv link. AGPL-3.0 license.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/LozzKappa/hotpin-llm",
+      "reports": [
+        {
+          "model": "gpt-oss:120b Q4",
+          "hardware": "Ryzen AI 9 HX 370, CPU-only, NVMe",
+          "system_ram_gb": 23.6,
+          "peak_ram_gb": 19.1,
+          "peak_ram_metric": "reported min RAM (GB)",
+          "tokens_per_second": 2.6,
+          "disk_gb": 58.5,
+          "source": "https://github.com/LozzKappa/hotpin-llm#results",
+          "detail": "Publisher result; minimum memory claim is for the tested settings, not a universal requirement.",
+          "evidence": "author-reported"
+        }
+      ]
+    }
   },
   {
     "name": "HQQ",
@@ -153,7 +456,18 @@
       "gpu"
     ],
     "note": "Half-quadratic quantization",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "quantization",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Half-quadratic quantization",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/mobiusml/hqq",
+      "reports": []
+    }
   },
   {
     "name": "InferSSD",
@@ -164,8 +478,36 @@
       "gpu",
       "ssd"
     ],
-    "note": "llama.cpp-based GGUF MoE SSD streaming with Metal and CUDA; Windows support status evolving.",
-    "evidence": "project-reported"
+    "note": "SSD-streamed MoE experts on llama.cpp using selected GGUF conversions; Metal and CUDA implementations.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "GGUF SSD expert streaming",
+      "platforms": [
+        "apple",
+        "nvidia",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "SSD-streamed MoE experts on llama.cpp using selected GGUF conversions; Metal and CUDA implementations.",
+      "limits": "Windows status is inconsistent across project documentation; not assumed supported here. Published comparisons are author-run.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/wici-ai/inferssd",
+      "reports": [
+        {
+          "model": "DeepSeek-V4.1-Flash-1017 (tested conversion)",
+          "hardware": "MacBook Pro M5 Max, 48 GB unified memory",
+          "system_ram_gb": 48,
+          "peak_ram_gb": null,
+          "peak_ram_metric": null,
+          "tokens_per_second": null,
+          "disk_gb": null,
+          "source": "https://github.com/wici-ai/inferssd/blob/main/docs/benchmark.md",
+          "detail": "Author publishes per-model 4K-prompt comparisons; do not infer universal throughput.",
+          "evidence": "author-reported"
+        }
+      ]
+    }
   },
   {
     "name": "KoboldCpp",
@@ -176,7 +518,18 @@
       "gpu"
     ],
     "note": "Local GGUF runner",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "runtime",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Local GGUF runner",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/LostRuins/koboldcpp",
+      "reports": []
+    }
   },
   {
     "name": "llama.cpp",
@@ -188,7 +541,18 @@
       "mobile"
     ],
     "note": "Quantized GGUF inference and hybrid offloading",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "runtime",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Quantized GGUF inference and hybrid offloading",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/ggml-org/llama.cpp",
+      "reports": []
+    }
   },
   {
     "name": "llmfit",
@@ -199,8 +563,64 @@
       "gpu",
       "apple-silicon"
     ],
-    "note": "Hardware detection, model-fit estimates, and user-submitted benchmarks; not itself an inference engine.",
-    "evidence": "documentation"
+    "note": "Detects CPU, RAM, VRAM, and models to estimate fit, with measured community benchmarks.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Hardware-fit recommendations",
+      "platforms": [
+        "cpu",
+        "nvidia",
+        "apple",
+        "windows",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Detects CPU, RAM, VRAM, and models to estimate fit, with measured community benchmarks.",
+      "limits": "Estimates are predictions, not guarantees. It selects models but is not itself an inference engine.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/AlexsJones/llmfit",
+      "reports": []
+    }
+  },
+  {
+    "name": "Low-Spec Coding LLM Setup",
+    "url": "https://github.com/Yasvanth-S/local-coding-llm-low-spec-setup",
+    "category": "guide",
+    "hardware": [
+      "cpu",
+      "gpu"
+    ],
+    "note": "Reproducible llama.cpp + aider setup for 4 GB GTX 1650 laptop with ~6.6 GiB system RAM.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "Practical quantized 4 GB VRAM setup",
+      "platforms": [
+        "nvidia",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Reproducible llama.cpp + aider setup for 4 GB GTX 1650 laptop with ~6.6 GiB system RAM.",
+      "limits": "A narrow hardware/model recipe, not new inference engine; 4B text Q4 works while vision at that quantization crashes on cited system.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/Yasvanth-S/local-coding-llm-low-spec-setup",
+      "reports": [
+        {
+          "model": "Qwen3.5-4B Q4_K_M",
+          "hardware": "Ryzen 5 5600H, GTX 1650 4 GB VRAM, Ubuntu 26.04",
+          "system_ram_gb": 6.6,
+          "peak_ram_gb": null,
+          "peak_ram_metric": null,
+          "peak_vram_gb": 3.5,
+          "tokens_per_second": 37.7,
+          "disk_gb": 2.74,
+          "source": "https://github.com/Yasvanth-S/local-coding-llm-low-spec-setup",
+          "detail": "Author reports 6.6 GiB total system RAM, ~3.5 GB VRAM at 49,152 context, text-only; higher contexts or vision can fail.",
+          "evidence": "author-reported"
+        }
+      ]
+    }
   },
   {
     "name": "Mistral.rs",
@@ -212,7 +632,18 @@
       "apple-silicon"
     ],
     "note": "Rust inference runtime",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "runtime",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Rust inference runtime",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/EricLBuehler/mistral.rs",
+      "reports": []
+    }
   },
   {
     "name": "MLC LLM",
@@ -223,7 +654,18 @@
       "gpu"
     ],
     "note": "Multi-device LLM deployment",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "runtime",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Multi-device LLM deployment",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/mlc-ai/mlc-llm",
+      "reports": []
+    }
   },
   {
     "name": "MLX LM",
@@ -233,7 +675,18 @@
       "apple-silicon"
     ],
     "note": "Inference and fine-tuning for MLX",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "runtime",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Inference and fine-tuning for MLX",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/ml-explore/mlx-lm",
+      "reports": []
+    }
   },
   {
     "name": "Ollama",
@@ -244,7 +697,80 @@
       "gpu"
     ],
     "note": "Local model runner and service",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "runtime",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Local model runner and service",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/ollama/ollama",
+      "reports": []
+    }
+  },
+  {
+    "name": "oMLX",
+    "url": "https://github.com/jundot/omlx",
+    "category": "runtime",
+    "hardware": [
+      "apple-silicon",
+      "ssd"
+    ],
+    "note": "Apple Silicon LLM server with continuous batching, hot RAM/cold SSD KV caching, and model memory limits.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Apple KV caching on SSD",
+      "platforms": [
+        "apple"
+      ],
+      "min_ram_gb": null,
+      "summary": "Apple Silicon LLM server with continuous batching, hot RAM/cold SSD KV caching, and model memory limits.",
+      "limits": "KV cache offloading is not equivalent to streaming a model larger than RAM. Requires macOS 15+ on Apple silicon.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/jundot/omlx",
+      "reports": []
+    }
+  },
+  {
+    "name": "PicoLM",
+    "url": "https://github.com/RightNow-AI/picolm",
+    "category": "runtime",
+    "hardware": [
+      "cpu",
+      "edge"
+    ],
+    "note": "C11 embedded inference with very small claimed resident footprint, loading model layers from storage.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "Tiny C runtime with mmap layer loading",
+      "platforms": [
+        "cpu",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "C11 embedded inference with very small claimed resident footprint, loading model layers from storage.",
+      "limits": "Claims 45 MB runtime footprint for a model file around 638 MB; check exact board and context settings. Last activity was February 2026.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/RightNow-AI/picolm",
+      "reports": [
+        {
+          "model": "1B class model",
+          "hardware": "Raspberry Pi 5 CPU",
+          "system_ram_gb": null,
+          "peak_ram_gb": 0.045,
+          "peak_ram_metric": "claimed runtime memory (GB)",
+          "tokens_per_second": 10,
+          "disk_gb": 0.638,
+          "source": "https://github.com/RightNow-AI/picolm",
+          "detail": "Author reports ~45 MB runtime footprint and ~10 tok/s on Pi 5; model file ~638 MB. This is not measured total system RAM.",
+          "evidence": "author-reported"
+        }
+      ]
+    }
   },
   {
     "name": "PowerInfer",
@@ -255,7 +781,18 @@
       "gpu"
     ],
     "note": "Activation-aware hybrid inference",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "sparsity",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Activation-aware hybrid inference",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/SJTU-IPADS/PowerInfer",
+      "reports": []
+    }
   },
   {
     "name": "SGLang",
@@ -265,7 +802,18 @@
       "gpu"
     ],
     "note": "Advanced model serving",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "serving",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "Advanced model serving",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/sgl-project/sglang",
+      "reports": []
+    }
   },
   {
     "name": "Slipstream",
@@ -276,8 +824,78 @@
       "ssd",
       "linux"
     ],
-    "note": "llama.cpp-derived MoE streaming and bounded expert cache; macOS app and headless node.",
-    "evidence": "project-reported"
+    "note": "llama.cpp-derived bounded-memory expert streaming, with a macOS app and an optional headless node.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "Apple Silicon SSD expert cache",
+      "platforms": [
+        "apple",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "llama.cpp-derived bounded-memory expert streaming, with a macOS app and an optional headless node.",
+      "limits": "Publisher's main Mac results use 36 GB memory; non-notarized app, SSD and cache-sensitive throughput.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/Schero94/slipstream",
+      "reports": [
+        {
+          "model": "Qwen3.6-35B-A3B Q4",
+          "hardware": "Apple Silicon Mac (36 GB), internal NVMe",
+          "system_ram_gb": 36,
+          "peak_ram_gb": null,
+          "peak_ram_metric": null,
+          "tokens_per_second": 19,
+          "disk_gb": null,
+          "source": "https://github.com/Schero94/slipstream/blob/main/bench/RESULTS.md",
+          "detail": "Author reports about 19 tok/s with 14 GiB expert cache; other cache settings considerably slower.",
+          "evidence": "author-reported"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Strata",
+    "url": "https://github.com/Niko1221/Strata",
+    "category": "offloading",
+    "hardware": [
+      "nvidia",
+      "windows",
+      "linux",
+      "ssd"
+    ],
+    "note": "Consumer PC inference with GUI and local APIs; weights not fitting RAM are read from SSD.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "Consumer GPU + system RAM + SSD inference",
+      "platforms": [
+        "nvidia",
+        "windows",
+        "linux",
+        "apple"
+      ],
+      "min_ram_gb": null,
+      "summary": "Consumer PC inference with GUI and local APIs; weights not fitting RAM are read from SSD.",
+      "limits": "Model-specific large storage and memory requirements; showcased flagship tests may use 46–64+ GB host RAM.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/Niko1221/Strata",
+      "reports": [
+        {
+          "model": "DeepSeek V4 Flash",
+          "hardware": "RTX 5070 12 GB VRAM, 64 GB RAM",
+          "system_ram_gb": 64,
+          "peak_ram_gb": null,
+          "peak_ram_metric": null,
+          "peak_vram_gb": 12,
+          "tokens_per_second": 4,
+          "disk_gb": null,
+          "source": "https://github.com/Niko1221/Strata",
+          "detail": "Publisher range 4–6 tok/s; hardware not typical low-RAM. Different models/quantizations have different memory needs.",
+          "evidence": "author-reported"
+        }
+      ]
+    }
   },
   {
     "name": "Swap-MoE",
@@ -287,8 +905,36 @@
       "cpu",
       "ssd"
     ],
-    "note": "llama.cpp patch set using mmap demand paging of MoE experts, optional fixation/prefetch.",
-    "evidence": "project-reported"
+    "note": "Patch set for demand paging MoE expert tensors from SSD; optional cache and prefetch tweaks.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "mmap demand-paged MoE experts",
+      "platforms": [
+        "cpu",
+        "windows",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Patch set for demand paging MoE expert tensors from SSD; optional cache and prefetch tweaks.",
+      "limits": "Modifies llama.cpp, so version drift matters. Expert fixation changes model routing and may alter output quality.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/ek15072809/Swap-MoE",
+      "reports": [
+        {
+          "model": "Qwen3.5-35B-A3B Q4_K_M",
+          "hardware": "CPU-only PC, SSD",
+          "system_ram_gb": 16,
+          "peak_ram_gb": null,
+          "peak_ram_metric": null,
+          "tokens_per_second": 7.28,
+          "disk_gb": 19.7,
+          "source": "https://github.com/ek15072809/Swap-MoE#benchmarks",
+          "detail": "Author's 16 GB RAM test; disk size is model file, not total disk requirement.",
+          "evidence": "author-reported"
+        }
+      ]
+    }
   },
   {
     "name": "vLLM",
@@ -298,6 +944,17 @@
       "gpu"
     ],
     "note": "High-throughput serving; not necessarily low-RAM",
-    "evidence": "documentation"
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "serving",
+      "platforms": [],
+      "min_ram_gb": null,
+      "summary": "High-throughput serving; not necessarily low-RAM",
+      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
+      "level": "not-reviewed",
+      "reviewed_on": null,
+      "source_url": "https://github.com/vllm-project/vllm",
+      "reports": []
+    }
   }
 ]
