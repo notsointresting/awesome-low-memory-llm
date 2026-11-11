@@ -139,6 +139,25 @@ The [interactive Atlas](docs/index.html), [side-by-side comparison](docs/compare
 
 **Important:** Project hardware claims remain upstream-reported unless explicitly independently reproduced. Model weight storage, host RAM, accelerator VRAM, and context/KV memory are different constraints. See [benchmark methodology](BENCHMARKS.md).
 
+## 📏 Community benchmark lab
+
+**[Open the Benchmark Lab](docs/benchmark-lab.html)** · [Benchmark methodology](BENCHMARKS.md) · [Contribute a result](https://github.com/notsointresting/awesome-low-memory-llm/issues/new?template=benchmark.yml)
+
+We now provide a **reproducible llama.cpp `llama-bench` wrapper** that records build/version, model size, test configuration, prompt-processing and generation throughput, plus raw per-repeat throughput samples. The output is a **local candidate submission**, never an automatically verified benchmark. It deliberately leaves TTFT, peak RAM and VRAM unknown because `llama-bench` does not measure them.
+
+```bash
+python scripts/bench_local.py --binary /path/to/llama-bench \
+  --model /path/to/model.gguf --threads 4 --gpu-layers 0 \
+  --prompt 512 --generate 128 --repeats 5 --output my-benchmark.json
+```
+
+**New reproducibility directories:**
+- [locallm-bench](https://github.com/chutapp/locallm-bench) — cpu-only 16 gb reproducible test suite; The machines are cloud VMs, not typical 8 GB laptops.
+- [local-llm-benchmarks](https://github.com/matnum/local-llm-benchmarks) — strix halo benchmark matrix; 128 GB desktop results do not generalize to 8/16 GB laptop tests; exact hardware and pinned software versions matter.
+- [benchmarking-local-llm-hosting](https://github.com/carpetbot/benchmarking-local-llm-hosting) — edge hardware benchmark and cost tracking; Mix of measured and estimated/historical data may appear; only source-identified raw runs should be used as numerical evidence.
+
+> No independent hardware benchmarks have been run by this repository's maintainer. Published upstream performance examples remain clearly labeled author-reported; submitted local output requires source and manual review.
+
 ## 🧩 Techniques
 
 | Method | Idea | Trade-off |

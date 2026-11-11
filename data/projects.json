@@ -104,6 +104,35 @@
     }
   },
   {
+    "name": "benchmarking-local-llm-hosting",
+    "url": "https://github.com/carpetbot/benchmarking-local-llm-hosting",
+    "category": "benchmark",
+    "hardware": [
+      "cpu",
+      "gpu",
+      "apple",
+      "linux"
+    ],
+    "note": "Documents SBC, Mac Mini and local-hosting measurements, including measured throughput, power, and cost methodology.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Edge hardware benchmark and cost tracking",
+      "platforms": [
+        "cpu",
+        "gpu",
+        "apple",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Documents SBC, Mac Mini and local-hosting measurements, including measured throughput, power, and cost methodology.",
+      "limits": "Mix of measured and estimated/historical data may appear; only source-identified raw runs should be used as numerical evidence.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/carpetbot/benchmarking-local-llm-hosting",
+      "reports": []
+    }
+  },
+  {
     "name": "Betelgeuse",
     "url": "https://github.com/Betelgeuse-AI/Betelgeuse",
     "category": "offloading",
@@ -894,6 +923,56 @@
       "level": "documentation",
       "reviewed_on": "2026-11-11",
       "source_url": "https://github.com/AlexsJones/llmfit",
+      "reports": []
+    }
+  },
+  {
+    "name": "local-llm-benchmarks",
+    "url": "https://github.com/matnum/local-llm-benchmarks",
+    "category": "benchmark",
+    "hardware": [
+      "gpu",
+      "linux"
+    ],
+    "note": "Reproducible llama.cpp benchmark matrix on AMD Ryzen AI Max+ 395 128 GB unified memory, including prefill, decode, TTFT, power and token-efficiency.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Strix Halo benchmark matrix",
+      "platforms": [
+        "gpu",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Reproducible llama.cpp benchmark matrix on AMD Ryzen AI Max+ 395 128 GB unified memory, including prefill, decode, TTFT, power and token-efficiency.",
+      "limits": "128 GB desktop results do not generalize to 8/16 GB laptop tests; exact hardware and pinned software versions matter.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/matnum/local-llm-benchmarks",
+      "reports": []
+    }
+  },
+  {
+    "name": "locallm-bench",
+    "url": "https://github.com/chutapp/locallm-bench",
+    "category": "benchmark",
+    "hardware": [
+      "cpu",
+      "linux"
+    ],
+    "note": "Published 150 author-run tests across model/quantization/context configurations on 16 GB AMD EPYC cloud VMs, including memory caps and stability scenarios.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "CPU-only 16 GB reproducible test suite",
+      "platforms": [
+        "cpu",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Published 150 author-run tests across model/quantization/context configurations on 16 GB AMD EPYC cloud VMs, including memory caps and stability scenarios.",
+      "limits": "The machines are cloud VMs, not typical 8 GB laptops. Its measured tok/s and usability criteria are workload-specific; results are not independently replicated by this directory.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/chutapp/locallm-bench",
       "reports": []
     }
   },

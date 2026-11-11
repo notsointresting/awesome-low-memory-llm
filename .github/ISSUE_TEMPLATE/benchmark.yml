@@ -1,37 +1,59 @@
-name: Submit a benchmark
-description: Provide reproducible memory and performance measurements
+name: Submit a reproducible local benchmark
+description: Submit a source-attributed result from your own hardware for manual review
 title: "[Benchmark] "
 labels: ["benchmark"]
 body:
-  - type: input
-    id: project
+  - type: markdown
     attributes:
-      label: Runtime + version/commit
+      value: |
+        Results are **community-reported until reviewed**. We do not accept token rates without model/quant, hardware and settings. Never paste API keys, usernames, home paths or confidential data.
+        Use [the local benchmark guide](https://github.com/notsointresting/awesome-low-memory-llm/blob/main/BENCHMARKS.md) and [visual Benchmark Lab](https://notsointresting.github.io/awesome-low-memory-llm/benchmark-lab.html).
+  - type: input
+    id: runtime
+    attributes:
+      label: Runtime, exact build commit and backend
+      placeholder: llama.cpp (commit SHA) · CPU / CUDA / Metal
     validations:
       required: true
   - type: input
     id: model
     attributes:
-      label: Exact model revision and quantization
+      label: Exact model source, revision, quantization and on-disk size
+      placeholder: Hugging Face repository and revision · Q4_K_M · GB
     validations:
       required: true
   - type: textarea
-    id: setup
+    id: hardware
     attributes:
-      label: Hardware, OS, storage, commands, and run settings
+      label: System hardware and memory
+      description: CPU, total/free host RAM, GPU and VRAM capacity, disk type, OS/kernel, driver, cooling/power mode
     validations:
       required: true
   - type: textarea
-    id: results
+    id: protocol
     attributes:
-      label: Peak RAM, peak VRAM, disk usage, tokens/sec, latency, and logs
-      description: State units and context/prompt/generation length. Put N/A where unavailable.
+      label: Full commands and workload
+      description: Prompt/output tokens, context/KV precision, GPU layers, threads, repeats, warm/cold, concurrency and how each metric was measured
     validations:
       required: true
-  - type: dropdown
+  - type: textarea
+    id: measurements
+    attributes:
+      label: Measurements with units
+      description: Mean/stddev pp & tg tokens/sec, TTFT (only if separately measured), actual peak RSS/VRAM (only if measured), SSD model footprint, failure/OOM, notes
+    validations:
+      required: true
+  - type: textarea
     id: evidence
     attributes:
-      label: Evidence level
-      options: ["Independently reproduced", "Community-reported", "Author-reported"]
+      label: Raw output and evidence links
+      description: Attach sanitized candidate JSON, logs, scripts or source commit. If reproducing someone else's result, link their experiment.
     validations:
       required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Submission acknowledgment
+      options:
+        - label: I ran the experiment or clearly credited its original author; I removed personal/sensitive information and understand that submission is not independent verification
+          required: true
