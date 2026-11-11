@@ -28,6 +28,23 @@ A curated, hardware-first guide to local LLM inference, RAM/VRAM optimization, S
 
 These are **starting points, not guarantees of compatibility** with a specific memory budget or model. Choose a model, precision, and context length before comparing memory requirements.
 
+## 🔬 Deep research: ten oversized-model and hardware-fit projects
+
+**[Read the full technical comparison](research/2026-11-11-ten-projects.md)** — memory techniques, supported hardware, evidence, limitations, last activity, and primary-source links. All throughput figures are **author-reported**, not independently replicated.
+
+| Project | Key idea | Important qualification |
+| --- | --- | --- |
+| [Edge0](https://github.com/Edge0-AI/Edge0) | SSD expert offload + trained next-step prerouter + quantized adapter recovery | Uses released matched checkpoints, adapters and prerouters; cross-platform memory figures are not di |
+| [Colibri](https://github.com/JustVugg/colibri) | Hierarchical expert placement in GPU, host RAM, and NVMe | Not a universal all-architecture runtime; explicit per-model engines and large model downloads |
+| [AirLLM](https://github.com/lyogavin/airllm) | Layer-by-layer transfer from disk to accelerator | Disk-intensive weight preparation and loading; macOS docs restrict support to Apple Silicon and Llam |
+| [Slipstream](https://github.com/Schero94/slipstream) | llama.cpp/Metal fork with SSD MoE expert streaming and size-bounded cache | Mac app is ad-hoc signed, not Apple notarized; performance highly sensitive to SSD and cache; small  |
+| [Swap-MoE](https://github.com/ek15072809/Swap-MoE) | llama.cpp patches for on-demand mmap paging of expert tensors | Fixating experts changes routing behavior, potentially affecting output quality; OS page cache and I |
+| [InferSSD](https://github.com/wici-ai/inferssd) | llama.cpp-based SSD-streamed MoE experts using standard GGUF, Metal/CUDA backends | Supported architectures and GGUF conversions are limited/tested explicitly; vendor comparisons are a |
+| [edgeMoE / BigMoeOnEdge](https://github.com/supastishn/edgeMoE) | CPU-only Android/desktop SSD or flash expert streaming on llama.cpp public API with b | README branding and badges point to Helldez/BigMoeOnEdge instead of this repository; confirm canonic |
+| [HotPin](https://github.com/LozzKappa/hotpin-llm) | Routing-guided hot expert pinning (mlock / VirtualLock) and optional read-ahead for C | Benefits only when weights exceed available RAM |
+| [DwarfStar (ds4)](https://github.com/antirez/ds4) | Narrow model-specialized engine, SSD streaming, Metal/CUDA/ROCm, multi-GPU and multi- | Not a generic GGUF runner; model list is intentionally narrow and may change; software described as  |
+| [llmfit](https://github.com/AlexsJones/llmfit) | Hardware introspection, model compatibility scoring, estimated throughput and crowd-s | Predictions are estimates, not guarantees |
+
 ## 📚 Project directory
 
 ### Inference runtimes and local apps
@@ -65,6 +82,12 @@ These are **starting points, not guarantees of compatibility** with a specific m
 | [GGUF](https://github.com/ggml-org/ggml/blob/master/docs/gguf.md) | Model file format used by llama.cpp and compatible tooling |
 | [Hugging Face Transformers](https://github.com/huggingface/transformers) | Broad model ecosystem and inference APIs |
 | [Optimum](https://github.com/huggingface/optimum) | Model hardware and inference optimization integrations |
+
+### Hardware-fit discovery
+
+| Project | Why it matters |
+| --- | --- |
+| [llmfit](https://github.com/AlexsJones/llmfit) | Detect CPU, RAM, GPU and VRAM to estimate what models fit and collect community benchmarks; not an inference engine |
 
 ## 🧩 Techniques
 
