@@ -104,6 +104,47 @@
     }
   },
   {
+    "name": "Betelgeuse",
+    "url": "https://github.com/Betelgeuse-AI/Betelgeuse",
+    "category": "offloading",
+    "hardware": [
+      "nvidia",
+      "linux",
+      "ssd"
+    ],
+    "note": "Experimental llama.cpp-derived out-of-core system that stages routed experts via NVMe and pinned host RAM.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "Bounded VRAM MoE expert paging",
+      "platforms": [
+        "nvidia",
+        "linux",
+        "ssd"
+      ],
+      "min_ram_gb": null,
+      "summary": "Experimental llama.cpp-derived out-of-core system that stages routed experts via NVMe and pinned host RAM.",
+      "limits": "Author benchmarks center on RTX 3060 12 GB VRAM + 16 GB RAM, warm/repeated workloads, and a narrow setup; not a general 748B solution.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/Betelgeuse-AI/Betelgeuse",
+      "reports": [
+        {
+          "model": "DeepSeek V4.1 Flash 748B-class checkpoint",
+          "hardware": "RTX 3060 12 GB VRAM, 16 GB host RAM, NVMe",
+          "system_ram_gb": 16,
+          "peak_ram_gb": null,
+          "peak_ram_metric": null,
+          "peak_vram_gb": null,
+          "tokens_per_second": 18.92,
+          "disk_gb": null,
+          "detail": "Author-reported warm repeated decode at 18.92 tok/s; much slower during cold cache initialization. GPU capacity is 12 GB, not a measured peak.",
+          "source": "https://github.com/Betelgeuse-AI/Betelgeuse",
+          "evidence": "author-reported"
+        }
+      ]
+    }
+  },
+  {
     "name": "BigMoeOnEdge",
     "url": "https://github.com/Helldez/BigMoeOnEdge",
     "category": "offloading",
@@ -157,6 +198,37 @@
           "evidence": "author-reported"
         }
       ]
+    }
+  },
+  {
+    "name": "BitNet (bitnet.cpp)",
+    "url": "https://github.com/microsoft/BitNet",
+    "category": "quantization",
+    "hardware": [
+      "cpu",
+      "nvidia",
+      "linux",
+      "windows",
+      "apple"
+    ],
+    "note": "Optimized C/C++ inference and kernels for ternary BitNet b1.58 models on CPU, with a GPU path.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "1.58-bit inference for compatible models",
+      "platforms": [
+        "cpu",
+        "nvidia",
+        "linux",
+        "windows",
+        "apple"
+      ],
+      "min_ram_gb": null,
+      "summary": "Optimized C/C++ inference and kernels for ternary BitNet b1.58 models on CPU, with a GPU path.",
+      "limits": "Not a drop-in way to run an arbitrary existing Llama/Qwen checkpoint at 1.58 bits; model architecture support is specific.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/microsoft/BitNet",
+      "reports": []
     }
   },
   {
@@ -318,6 +390,33 @@
     }
   },
   {
+    "name": "ExecuTorch",
+    "url": "https://github.com/pytorch/executorch",
+    "category": "runtime",
+    "hardware": [
+      "android",
+      "apple",
+      "cpu"
+    ],
+    "note": "Executes exported PyTorch models on embedded and mobile hardware using hardware delegates.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "PyTorch on-device deployment",
+      "platforms": [
+        "android",
+        "apple",
+        "cpu"
+      ],
+      "min_ram_gb": null,
+      "summary": "Executes exported PyTorch models on embedded and mobile hardware using hardware delegates.",
+      "limits": "A deployment framework, not proof that a particular 7B+ LLM fits; device backend and model export are required.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/pytorch/executorch",
+      "reports": []
+    }
+  },
+  {
     "name": "ExLlamaV2",
     "url": "https://github.com/turboderp/exllamav2",
     "category": "quantization",
@@ -335,6 +434,60 @@
       "level": "not-reviewed",
       "reviewed_on": null,
       "source_url": "https://github.com/turboderp/exllamav2",
+      "reports": []
+    }
+  },
+  {
+    "name": "FlashAttention",
+    "url": "https://github.com/Dao-AILab/flash-attention",
+    "category": "research",
+    "hardware": [
+      "nvidia",
+      "gpu",
+      "linux"
+    ],
+    "note": "Attention kernels that reduce intermediate memory traffic, helping supported transformer workloads.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "IO-aware exact attention kernels",
+      "platforms": [
+        "nvidia",
+        "gpu",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Attention kernels that reduce intermediate memory traffic, helping supported transformer workloads.",
+      "limits": "Kernel library, not a complete low-RAM inference engine; hardware/dtype support differs by version.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/Dao-AILab/flash-attention",
+      "reports": []
+    }
+  },
+  {
+    "name": "FlashInfer",
+    "url": "https://github.com/flashinfer-ai/flashinfer",
+    "category": "serving",
+    "hardware": [
+      "nvidia",
+      "gpu",
+      "linux"
+    ],
+    "note": "Optimized attention, decode and serving kernels used by other inference stacks.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "LLM serving kernel library",
+      "platforms": [
+        "nvidia",
+        "gpu",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Optimized attention, decode and serving kernels used by other inference stacks.",
+      "limits": "Primarily accelerator serving infrastructure; not a CPU-only low-RAM consumer application.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/flashinfer-ai/flashinfer",
       "reports": []
     }
   },
@@ -572,6 +725,100 @@
     }
   },
   {
+    "name": "KTransformers",
+    "url": "https://github.com/kvcache-ai/ktransformers",
+    "category": "offloading",
+    "hardware": [
+      "cpu",
+      "nvidia",
+      "linux"
+    ],
+    "note": "Splits expert processing across CPU and GPU using optimized quantized kernels and scheduling for large MoE models.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Hybrid CPU–GPU MoE kernels",
+      "platforms": [
+        "cpu",
+        "nvidia",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Splits expert processing across CPU and GPU using optimized quantized kernels and scheduling for large MoE models.",
+      "limits": "Real configurations in official guides may require 24+ GB GPU VRAM and hundreds of GB host RAM; do not infer laptop compatibility from 'hybrid'.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/kvcache-ai/ktransformers",
+      "reports": []
+    }
+  },
+  {
+    "name": "LiteRT",
+    "url": "https://github.com/google-ai-edge/LiteRT",
+    "category": "runtime",
+    "hardware": [
+      "android",
+      "apple",
+      "cpu"
+    ],
+    "note": "Runtime, conversion and optimization for edge devices, successor to TensorFlow Lite.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Google on-device ML/GenAI runtime",
+      "platforms": [
+        "android",
+        "apple",
+        "cpu"
+      ],
+      "min_ram_gb": null,
+      "summary": "Runtime, conversion and optimization for edge devices, successor to TensorFlow Lite.",
+      "limits": "A general edge runtime; check generative model operators, delegate availability and model packaging.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/google-ai-edge/LiteRT",
+      "reports": []
+    }
+  },
+  {
+    "name": "llama-modchip",
+    "url": "https://github.com/synchopate/llama-modchip",
+    "category": "offloading",
+    "hardware": [
+      "cpu",
+      "linux",
+      "windows"
+    ],
+    "note": "llama.cpp/ggml patch collection, SIMD kernels and quantization for large MoE models on CPUs without a GPU.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "CPU-first sparse MoE + quantized GGUF optimizations",
+      "platforms": [
+        "cpu",
+        "linux",
+        "windows"
+      ],
+      "min_ram_gb": null,
+      "summary": "llama.cpp/ggml patch collection, SIMD kernels and quantization for large MoE models on CPUs without a GPU.",
+      "limits": "Author's headline 284B test is on 64 GB RAM with special quantization; not equivalent to 8 or 16 GB systems.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/synchopate/llama-modchip",
+      "reports": [
+        {
+          "model": "DeepSeek V4 Flash ~284B, special low-bit GGUF",
+          "hardware": "CPU-only 64 GB RAM class (Zen 5)",
+          "system_ram_gb": 64,
+          "peak_ram_gb": 57.61,
+          "peak_ram_metric": "VmRSS (GiB)",
+          "tokens_per_second": 9.1,
+          "disk_gb": 56.56,
+          "detail": "Author reports ~9.1–14.7 tok/s decode on 64 GB CPU setup; 57.61 GiB VmRSS; 56.56 GiB quantized weights on disk. Different contexts may vary.",
+          "source": "https://github.com/synchopate/llama-modchip",
+          "evidence": "author-reported"
+        }
+      ]
+    }
+  },
+  {
     "name": "llama.cpp",
     "url": "https://github.com/ggml-org/llama.cpp",
     "category": "runtime",
@@ -591,6 +838,33 @@
       "level": "not-reviewed",
       "reviewed_on": null,
       "source_url": "https://github.com/ggml-org/llama.cpp",
+      "reports": []
+    }
+  },
+  {
+    "name": "LLM Compressor",
+    "url": "https://github.com/vllm-project/llm-compressor",
+    "category": "quantization",
+    "hardware": [
+      "gpu",
+      "nvidia",
+      "linux"
+    ],
+    "note": "Compression recipes and quantization algorithms for LLM deployment, especially vLLM integration.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Model compression for serving",
+      "platforms": [
+        "gpu",
+        "nvidia",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Compression recipes and quantization algorithms for LLM deployment, especially vLLM integration.",
+      "limits": "A compression pipeline, not a local inference app; produced formats depend on target runtime and accelerator.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/vllm-project/llm-compressor",
       "reports": []
     }
   },
@@ -729,6 +1003,104 @@
     }
   },
   {
+    "name": "MNN / MNN-LLM",
+    "url": "https://github.com/alibaba/MNN",
+    "category": "runtime",
+    "hardware": [
+      "android",
+      "apple",
+      "cpu",
+      "linux"
+    ],
+    "note": "Lightweight on-device inference framework with mobile LLM examples, ARM optimizations and mobile chat apps.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "Mobile-first inference and INT4 quantization",
+      "platforms": [
+        "android",
+        "apple",
+        "cpu",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Lightweight on-device inference framework with mobile LLM examples, ARM optimizations and mobile chat apps.",
+      "limits": "Claimed speeds for tiny models on latest iPhones do not generalize to large models or typical Android phones.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/alibaba/MNN",
+      "reports": [
+        {
+          "model": "MNN-Pocket 0.3B INT4",
+          "hardware": "iPhone 18 Pro, mobile",
+          "system_ram_gb": null,
+          "peak_ram_gb": null,
+          "peak_ram_metric": null,
+          "tokens_per_second": 350,
+          "disk_gb": 0.173,
+          "detail": "Alibaba MNN team's claimed decode speed on iPhone 18 Pro for the 300M small model. 173 MB is model artifact size, not total device memory.",
+          "source": "https://github.com/alibaba/MNN",
+          "evidence": "author-reported"
+        }
+      ]
+    }
+  },
+  {
+    "name": "MobileLLM",
+    "url": "https://github.com/facebookresearch/MobileLLM",
+    "category": "research",
+    "hardware": [
+      "android",
+      "cpu",
+      "apple"
+    ],
+    "note": "Research code and efficient small-language-model architectures for mobile use cases.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Sub-billion on-device model design",
+      "platforms": [
+        "android",
+        "cpu",
+        "apple"
+      ],
+      "min_ram_gb": null,
+      "summary": "Research code and efficient small-language-model architectures for mobile use cases.",
+      "limits": "Primarily model/training research rather than a general-purpose local inference engine.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/facebookresearch/MobileLLM",
+      "reports": []
+    }
+  },
+  {
+    "name": "MoE-Infinity",
+    "url": "https://github.com/EfficientMoE/MoE-Infinity",
+    "category": "offloading",
+    "hardware": [
+      "gpu",
+      "nvidia",
+      "linux",
+      "ssd"
+    ],
+    "note": "Streams selected experts from SSD and host RAM into GPU cache with trace-aware prefetch and an OpenAI-compatible serving path.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Hierarchical MoE expert offloading",
+      "platforms": [
+        "gpu",
+        "nvidia",
+        "linux",
+        "ssd"
+      ],
+      "min_ram_gb": null,
+      "summary": "Streams selected experts from SSD and host RAM into GPU cache with trace-aware prefetch and an OpenAI-compatible serving path.",
+      "limits": "Single-GPU DeepSeek-V2-Lite docs suggest at least 16 GB VRAM plus fast SSD; not an 8 GB CPU-only tool. Open-source version differs from the research-paper system.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/EfficientMoE/MoE-Infinity",
+      "reports": []
+    }
+  },
+  {
     "name": "Ollama",
     "url": "https://github.com/ollama/ollama",
     "category": "runtime",
@@ -775,6 +1147,64 @@
     }
   },
   {
+    "name": "ONNX Runtime GenAI",
+    "url": "https://github.com/microsoft/onnxruntime-genai",
+    "category": "runtime",
+    "hardware": [
+      "cpu",
+      "nvidia",
+      "windows",
+      "linux",
+      "android"
+    ],
+    "note": "Generative AI APIs on ONNX Runtime across CPU/GPU/edge acceleration providers.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "ONNX generative model runtime",
+      "platforms": [
+        "cpu",
+        "nvidia",
+        "windows",
+        "linux",
+        "android"
+      ],
+      "min_ram_gb": null,
+      "summary": "Generative AI APIs on ONNX Runtime across CPU/GPU/edge acceleration providers.",
+      "limits": "Model conversion, tokenizer and execution provider support vary; not specifically an SSD-streaming system.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/microsoft/onnxruntime-genai",
+      "reports": []
+    }
+  },
+  {
+    "name": "OpenVINO GenAI",
+    "url": "https://github.com/openvinotoolkit/openvino.genai",
+    "category": "runtime",
+    "hardware": [
+      "cpu",
+      "linux",
+      "windows"
+    ],
+    "note": "C++ and Python pipelines for generative model serving via OpenVINO backends.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Intel CPU/iGPU optimized inference",
+      "platforms": [
+        "cpu",
+        "linux",
+        "windows"
+      ],
+      "min_ram_gb": null,
+      "summary": "C++ and Python pipelines for generative model serving via OpenVINO backends.",
+      "limits": "Optimization depends on supported Intel hardware and converted model variants; no universal minimum RAM.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/openvinotoolkit/openvino.genai",
+      "reports": []
+    }
+  },
+  {
     "name": "PicoLM",
     "url": "https://github.com/RightNow-AI/picolm",
     "category": "runtime",
@@ -813,24 +1243,72 @@
     }
   },
   {
+    "name": "Pithos",
+    "url": "https://github.com/benmaster82/Pithos",
+    "category": "runtime",
+    "hardware": [
+      "cpu",
+      "windows",
+      "linux",
+      "ssd"
+    ],
+    "note": "Dependency-light C runtime for Liquid AI LFM model families, with terminal chat and local OpenAI-compatible serving.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "Small C engine with expert streaming",
+      "platforms": [
+        "cpu",
+        "windows",
+        "linux",
+        "ssd"
+      ],
+      "min_ram_gb": null,
+      "summary": "Dependency-light C runtime for Liquid AI LFM model families, with terminal chat and local OpenAI-compatible serving.",
+      "limits": "Specializes in LFM families; author speed comparisons are specific to particular devices/models and experimental GPU backends.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/benmaster82/Pithos",
+      "reports": [
+        {
+          "model": "LFM family model (13.5 GB files)",
+          "hardware": "16 GB RAM laptop + optional GPU",
+          "system_ram_gb": 16,
+          "peak_ram_gb": null,
+          "peak_ram_metric": null,
+          "tokens_per_second": null,
+          "disk_gb": 13.5,
+          "detail": "Project says a 13.5 GB file can run on a 16 GB laptop, using expert offload. Model/backend details must be checked upstream.",
+          "source": "https://github.com/benmaster82/Pithos",
+          "evidence": "author-reported"
+        }
+      ]
+    }
+  },
+  {
     "name": "PowerInfer",
-    "url": "https://github.com/SJTU-IPADS/PowerInfer",
+    "url": "https://github.com/Tiiny-AI/PowerInfer",
     "category": "sparsity",
     "hardware": [
       "cpu",
       "gpu"
     ],
-    "note": "Activation-aware hybrid inference",
+    "note": "CPU/GPU hybrid inference leveraging activation locality; canonical upstream is Tiiny-AI/PowerInfer.",
     "evidence": "documentation",
     "profile": {
-      "mechanism": "sparsity",
-      "platforms": [],
+      "mechanism": "Activation-aware GPU/CPU hybrid inference",
+      "platforms": [
+        "cpu",
+        "nvidia",
+        "windows",
+        "linux",
+        "apple"
+      ],
       "min_ram_gb": null,
-      "summary": "Activation-aware hybrid inference",
-      "limits": "Not yet covered by the deep hardware evidence review; consult upstream for precise compatibility.",
-      "level": "not-reviewed",
-      "reviewed_on": null,
-      "source_url": "https://github.com/SJTU-IPADS/PowerInfer",
+      "summary": "CPU/GPU hybrid inference leveraging activation locality; canonical upstream is Tiiny-AI/PowerInfer.",
+      "limits": "Requires compatible PowerInfer model weights/predictors; not a generic drop-in boost for every GGUF or consumer model.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/Tiiny-AI/PowerInfer",
       "reports": []
     }
   },
@@ -892,6 +1370,58 @@
           "evidence": "author-reported"
         }
       ]
+    }
+  },
+  {
+    "name": "Speedy",
+    "url": "https://github.com/DevDock-AI/Speedy",
+    "category": "offloading",
+    "hardware": [
+      "nvidia",
+      "linux",
+      "windows"
+    ],
+    "note": "Modified Strata inference for long-context Qwen3.8 Flash Next on consumer RTX cards.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "RTX 3080 tuned Strata fork",
+      "platforms": [
+        "nvidia",
+        "linux",
+        "windows"
+      ],
+      "min_ram_gb": null,
+      "summary": "Modified Strata inference for long-context Qwen3.8 Flash Next on consumer RTX cards.",
+      "limits": "Published Q4 comparison uses 128 GB system RAM and third-party GPU-unlock kernel module; 10 GB VRAM is NOT the full hardware requirement.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/DevDock-AI/Speedy",
+      "reports": []
+    }
+  },
+  {
+    "name": "SqueezeLLM",
+    "url": "https://github.com/SqueezeAILab/SqueezeLLM",
+    "category": "quantization",
+    "hardware": [
+      "nvidia",
+      "linux"
+    ],
+    "note": "Research implementation preserving high-sensitivity weight outliers alongside aggressively quantized dense weights.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "Dense-and-sparse weight quantization",
+      "platforms": [
+        "nvidia",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Research implementation preserving high-sensitivity weight outliers alongside aggressively quantized dense weights.",
+      "limits": "Research-focused; latest recorded upstream push was in 2024. Verify compatibility with modern models/kernels before adoption.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/SqueezeAILab/SqueezeLLM",
+      "reports": []
     }
   },
   {
@@ -977,6 +1507,33 @@
     }
   },
   {
+    "name": "TensorRT-LLM",
+    "url": "https://github.com/NVIDIA/TensorRT-LLM",
+    "category": "serving",
+    "hardware": [
+      "nvidia",
+      "gpu",
+      "linux"
+    ],
+    "note": "Optimized GPU inference pipelines and memory-management techniques for NVIDIA accelerators.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "NVIDIA optimized inference and serving",
+      "platforms": [
+        "nvidia",
+        "gpu",
+        "linux"
+      ],
+      "min_ram_gb": null,
+      "summary": "Optimized GPU inference pipelines and memory-management techniques for NVIDIA accelerators.",
+      "limits": "Serving framework for compatible NVIDIA hardware; not a 4 GB laptop solution.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/NVIDIA/TensorRT-LLM",
+      "reports": []
+    }
+  },
+  {
     "name": "vLLM",
     "url": "https://github.com/vllm-project/vllm",
     "category": "serving",
@@ -994,6 +1551,31 @@
       "level": "not-reviewed",
       "reviewed_on": null,
       "source_url": "https://github.com/vllm-project/vllm",
+      "reports": []
+    }
+  },
+  {
+    "name": "WebLLM",
+    "url": "https://github.com/mlc-ai/web-llm",
+    "category": "runtime",
+    "hardware": [
+      "web",
+      "gpu"
+    ],
+    "note": "Runs supported LLMs in the browser using WebGPU, with on-device weights and a JS API.",
+    "evidence": "documentation",
+    "profile": {
+      "mechanism": "WebGPU in-browser local inference",
+      "platforms": [
+        "web",
+        "gpu"
+      ],
+      "min_ram_gb": null,
+      "summary": "Runs supported LLMs in the browser using WebGPU, with on-device weights and a JS API.",
+      "limits": "Requires compatible WebGPU browser/GPU and downloaded model files; browser memory and device limits still apply.",
+      "level": "documentation",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/mlc-ai/web-llm",
       "reports": []
     }
   }

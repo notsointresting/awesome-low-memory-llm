@@ -28,7 +28,7 @@ A curated, hardware-first guide to local LLM inference, RAM/VRAM optimization, S
 | **Limited GPU VRAM** | [llama.cpp](https://github.com/ggml-org/llama.cpp), [ExLlamaV2](https://github.com/turboderp/exllamav2), [vLLM](https://github.com/vllm-project/vllm) | Supported quantization, offload path, total system RAM |
 | **Android / mobile** | [MLC LLM](https://github.com/mlc-ai/mlc-llm), [llama.cpp](https://github.com/ggml-org/llama.cpp) | Device support, thermals, battery use |
 | **Investigating SSD-backed inference** | [Edge0](https://github.com/Edge0-AI/Edge0), [FlexGen](https://github.com/FMInference/FlexGen) | Storage footprint, SSD throughput, reproducibility |
-| **Researching sparse/MoE methods** | [PowerInfer](https://github.com/SJTU-IPADS/PowerInfer), [llama.cpp](https://github.com/ggml-org/llama.cpp) | Model architecture and platform compatibility |
+| **Researching sparse/MoE methods** | [PowerInfer](https://github.com/Tiiny-AI/PowerInfer), [llama.cpp](https://github.com/ggml-org/llama.cpp) | Model architecture and platform compatibility |
 
 These are **starting points, not guarantees of compatibility** with a specific memory budget or model. Choose a model, precision, and context length before comparing memory requirements.
 
@@ -70,7 +70,7 @@ These are **starting points, not guarantees of compatibility** with a specific m
 | --- | --- | --- |
 | [Edge0](https://github.com/Edge0-AI/Edge0) | SSD-backed MoE weight streaming and predictive prefetch | Project performance claims are not independently verified here |
 | [FlexGen](https://github.com/FMInference/FlexGen) | Offloading model execution across GPU, CPU, and disk | Research implementation; review model and setup compatibility |
-| [PowerInfer](https://github.com/SJTU-IPADS/PowerInfer) | Activation-aware CPU/GPU hybrid inference | Check supported models and reproducibility |
+| [PowerInfer](https://github.com/Tiiny-AI/PowerInfer) | Activation-aware CPU/GPU hybrid inference | Check supported models and reproducibility |
 | [ExLlamaV2](https://github.com/turboderp/exllamav2) | Quantized GPU inference | Hardware, format, and model-family constraints apply |
 | [bitsandbytes](https://github.com/bitsandbytes-foundation/bitsandbytes) | 8-bit and 4-bit quantization components | Library, not a complete inference application |
 | [AutoGPTQ](https://github.com/AutoGPTQ/AutoGPTQ) | GPTQ quantization tooling | Check repository maintenance and supported stacks |
@@ -110,6 +110,34 @@ These are **starting points, not guarantees of compatibility** with a specific m
 ### Extreme-scale CPU streaming: Kimi K3 in C
 
 [**kimi-k3-in-c**](https://github.com/FareedKhan-dev/kimi-k3-in-c) is a portable C99 Kimi K3 engine. The author reports **2.78T parameters**, **8.24 GB peak RSS**, and **~26.5 seconds per token** with an 8 GB memory preset on a high-end test machine. **It still requires ~1.7 TB free SSD space** (checkpoint and packed trunk). These are author-reported measurements, **not independent tests**. An 8.24 GB peak footprint is also *greater* than 8.00 GB, so the 8 GB label is not a hard minimum-RAM guarantee.
+
+## 🧭 Research expansion — November 2026
+
+The [interactive Atlas](docs/index.html), [side-by-side comparison](docs/compare.html), and [market landscape](research/2026-11-11-market-landscape.md) now cover **53 projects**. These are curated *techniques and tools*, not a claim that every project runs on an 8 GB computer.
+
+| Newly researched project | What it adds | Important boundary |
+| --- | --- | --- |
+| [MoE-Infinity](https://github.com/EfficientMoE/MoE-Infinity) | Hierarchical MoE expert offloading | Single-GPU DeepSeek-V2-Lite docs suggest at least 16 GB VRAM plus fast SSD; not an 8 GB CPU-only tool |
+| [KTransformers](https://github.com/kvcache-ai/ktransformers) | Hybrid CPU–GPU MoE kernels | Real configurations in official guides may require 24+ GB GPU VRAM and hundreds of GB host RAM; do not infer laptop compatibility from 'hybrid' |
+| [BitNet (bitnet.cpp)](https://github.com/microsoft/BitNet) | 1.58-bit inference for compatible models | Not a drop-in way to run an arbitrary existing Llama/Qwen checkpoint at 1 |
+| [MNN / MNN-LLM](https://github.com/alibaba/MNN) | Mobile-first inference and INT4 quantization | Claimed speeds for tiny models on latest iPhones do not generalize to large models or typical Android phones |
+| [ExecuTorch](https://github.com/pytorch/executorch) | PyTorch on-device deployment | A deployment framework, not proof that a particular 7B+ LLM fits; device backend and model export are required |
+| [LiteRT](https://github.com/google-ai-edge/LiteRT) | Google on-device ML/GenAI runtime | A general edge runtime; check generative model operators, delegate availability and model packaging |
+| [WebLLM](https://github.com/mlc-ai/web-llm) | WebGPU in-browser local inference | Requires compatible WebGPU browser/GPU and downloaded model files; browser memory and device limits still apply |
+| [ONNX Runtime GenAI](https://github.com/microsoft/onnxruntime-genai) | ONNX generative model runtime | Model conversion, tokenizer and execution provider support vary; not specifically an SSD-streaming system |
+| [OpenVINO GenAI](https://github.com/openvinotoolkit/openvino.genai) | Intel CPU/iGPU optimized inference | Optimization depends on supported Intel hardware and converted model variants; no universal minimum RAM |
+| [SqueezeLLM](https://github.com/SqueezeAILab/SqueezeLLM) | Dense-and-sparse weight quantization | Research-focused; latest recorded upstream push was in 2024 |
+| [LLM Compressor](https://github.com/vllm-project/llm-compressor) | Model compression for serving | A compression pipeline, not a local inference app; produced formats depend on target runtime and accelerator |
+| [MobileLLM](https://github.com/facebookresearch/MobileLLM) | Sub-billion on-device model design | Primarily model/training research rather than a general-purpose local inference engine |
+| [Betelgeuse](https://github.com/Betelgeuse-AI/Betelgeuse) | Bounded VRAM MoE expert paging | Author benchmarks center on RTX 3060 12 GB VRAM + 16 GB RAM, warm/repeated workloads, and a narrow setup; not a general 748B solution |
+| [llama-modchip](https://github.com/synchopate/llama-modchip) | CPU-first sparse MoE + quantized GGUF optimizations | Author's headline 284B test is on 64 GB RAM with special quantization; not equivalent to 8 or 16 GB systems |
+| [Speedy](https://github.com/DevDock-AI/Speedy) | RTX 3080 tuned Strata fork | Published Q4 comparison uses 128 GB system RAM and third-party GPU-unlock kernel module; 10 GB VRAM is NOT the full hardware requirement |
+| [Pithos](https://github.com/benmaster82/Pithos) | Small C engine with expert streaming | Specializes in LFM families; author speed comparisons are specific to particular devices/models and experimental GPU backends |
+| [FlashAttention](https://github.com/Dao-AILab/flash-attention) | IO-aware exact attention kernels | Kernel library, not a complete low-RAM inference engine; hardware/dtype support differs by version |
+| [FlashInfer](https://github.com/flashinfer-ai/flashinfer) | LLM serving kernel library | Primarily accelerator serving infrastructure; not a CPU-only low-RAM consumer application |
+| [TensorRT-LLM](https://github.com/NVIDIA/TensorRT-LLM) | NVIDIA optimized inference and serving | Serving framework for compatible NVIDIA hardware; not a 4 GB laptop solution |
+
+**Important:** Project hardware claims remain upstream-reported unless explicitly independently reproduced. Model weight storage, host RAM, accelerator VRAM, and context/KV memory are different constraints. See [benchmark methodology](BENCHMARKS.md).
 
 ## 🧩 Techniques
 
