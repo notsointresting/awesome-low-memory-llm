@@ -25,3 +25,9 @@ Follow `BENCHMARKS.md`. Provide logs/commands where possible; disclose whether r
 ## Community standards
 
 Be respectful and constructive. See `CODE_OF_CONDUCT.md`. Maintainers may edit descriptions for consistency and reject unrelated or misleading submissions.
+
+## Community benchmark submissions
+
+Visit the [Benchmark Lab](docs/benchmark-lab.html) for a reproducible `llama-bench` command and [BENCHMARKS.md](BENCHMARKS.md) for methodology. Candidate JSON is not an accepted or independently reproduced benchmark: maintainers review model source/revision, quantization, hardware, repeat samples, logs, and source of measured RAM/VRAM before manually adding records to `data/community-benchmarks.json`.
+
+Do not publish usernames, hostnames, absolute private paths, access tokens or confidential prompts in logs. CPU/GPU strings and model filenames are potentially identifying and should be reviewed before sharing.

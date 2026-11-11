@@ -16,3 +16,5 @@ jobs:
       - run: python scripts/validate.py
       - name: Verify visual atlas matches the canonical catalog
         run: python scripts/build_atlas.py --check
+      - name: Test benchmark parser with synthetic fixtures
+        run: python -m unittest discover -s tests -p 'test_*.py' -v

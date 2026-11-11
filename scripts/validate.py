@@ -33,3 +33,14 @@ for item in entries:
             val = report.get(key)
             assert val is None or (type(val) in (float, int) and val >= 0), (item['name'], key)
 print('Hardware evidence records have source URLs and valid numeric units.')
+
+# Only reviewed submissions may enter the accepted benchmark index.
+community_path = root / 'data/community-benchmarks.json'
+if community_path.exists():
+    community = json.loads(community_path.read_text(encoding='utf-8'))
+    assert isinstance(community, list), 'community benchmark index must be an array'
+    for result in community:
+        assert result.get('status') == 'reviewed', 'Unreviewed candidate cannot be published'
+        assert result.get('source_url', '').startswith('https://'), 'Accepted result needs source'
+        assert result.get('reviewed_on'), 'Accepted result needs a review date'
+print('Accepted community benchmark index validated.')
