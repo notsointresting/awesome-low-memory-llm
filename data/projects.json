@@ -510,6 +510,46 @@
     }
   },
   {
+    "name": "kimi-k3-in-c",
+    "url": "https://github.com/FareedKhan-dev/kimi-k3-in-c",
+    "category": "offloading",
+    "hardware": [
+      "cpu",
+      "ssd"
+    ],
+    "note": "Portable C99 Kimi K3 inference with SSD-streamed expert and trunk weights; publisher reports 8.24 GB RSS for a 2.78T model, but ~1.7 TB free disk required and very slow decoding.",
+    "evidence": "project-reported",
+    "profile": {
+      "mechanism": "CPU-only streaming of packed MoE experts and dense trunk",
+      "platforms": [
+        "cpu",
+        "linux",
+        "windows",
+        "apple"
+      ],
+      "min_ram_gb": 8,
+      "summary": "Portable C99 runtime targeting Kimi K3 2.78T parameters, with configurable memory budgets, packed expert compute and SSD streaming.",
+      "limits": "Requires ~1.7 TB free storage (1.56 TB checkpoint plus 109 GB packed trunk); 8.24 GB peak RSS in author's sample exceeds 8.00 GB, so 8 GB is not a hard guarantee. At low memory, generation can take ~26–33 seconds/token. Specific Kimi K3 model; not a general LLM runner.",
+      "level": "author-reported",
+      "reviewed_on": "2026-11-11",
+      "source_url": "https://github.com/FareedKhan-dev/kimi-k3-in-c",
+      "reports": [
+        {
+          "model": "Kimi K3 2.78T",
+          "hardware": "CPU-only 124-core reference system with fast NVMe; 8 GB preset",
+          "system_ram_gb": 8,
+          "peak_ram_gb": 8.24,
+          "peak_ram_metric": "peak RSS (GB)",
+          "tokens_per_second": 0.0377,
+          "disk_gb": 1700,
+          "source": "https://github.com/FareedKhan-dev/kimi-k3-in-c",
+          "detail": "Author 8 GB preset reports 26.5 seconds per token in summary and another example 32.69 seconds/token; ~1.7 TB free storage, not an 8 GB total resource footprint.",
+          "evidence": "author-reported"
+        }
+      ]
+    }
+  },
+  {
     "name": "KoboldCpp",
     "url": "https://github.com/LostRuins/koboldcpp",
     "category": "runtime",

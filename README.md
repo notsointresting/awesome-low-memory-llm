@@ -15,6 +15,10 @@ A curated, hardware-first guide to local LLM inference, RAM/VRAM optimization, S
 > [!IMPORTANT]
 > **Low RAM does not mean low total memory, low storage, or fast tokens/second.** Some tools stream or offload weights, so SSD capacity and I/O speed matter. Claims below describe approaches—not independent benchmark results. See the [benchmark policy](BENCHMARKS.md).
 
+## 🌐 Interactive visual hardware explorer
+
+**[Open the Low-Memory LLM Atlas](docs/index.html)** — a responsive, framework-free HTML app with search, hardware filters, source-labeled model tests, and technical caveats. [Setup GitHub Pages](docs/README.md) to publish at a public URL.
+
 ## ⚡ Start with your hardware
 
 | What you have | Where to start | What to check |
@@ -102,6 +106,10 @@ These are **starting points, not guarantees of compatibility** with a specific m
 
 > [!NOTE]
 > These are **author-published** results. They are not our own independent benchmark runs. `edgeMoE` references a different repository in its README; see [BigMoeOnEdge](https://github.com/Helldez/BigMoeOnEdge) for the more active upstream.
+
+### Extreme-scale CPU streaming: Kimi K3 in C
+
+[**kimi-k3-in-c**](https://github.com/FareedKhan-dev/kimi-k3-in-c) is a portable C99 Kimi K3 engine. The author reports **2.78T parameters**, **8.24 GB peak RSS**, and **~26.5 seconds per token** with an 8 GB memory preset on a high-end test machine. **It still requires ~1.7 TB free SSD space** (checkpoint and packed trunk). These are author-reported measurements, **not independent tests**. An 8.24 GB peak footprint is also *greater* than 8.00 GB, so the 8 GB label is not a hard minimum-RAM guarantee.
 
 ## 🧩 Techniques
 
